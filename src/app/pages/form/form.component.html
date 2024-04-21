@@ -1,0 +1,81 @@
+<div class="container">
+    <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+          <label for="reference">Reference:</label>
+          <input type="text" id="reference" name="reference" required formControlName="reference">
+          <div
+              *ngIf="Form.controls.reference.invalid && (Form.controls.reference.dirty || Form.controls.reference.touched)"
+              class="error-text">
+              <div *ngIf="Form.controls.reference.errors?.['required']">Reference is required</div>
+              <div *ngIf="Form.controls.reference.errors?.['minlength']">Reference needs minimum 5 characters</div>
+              <div *ngIf="Form.controls.reference.errors?.['maxlength']">Name has a maximum of 10 characters</div>
+              <div *ngIf="Form.controls.reference.errors?.['pattern']">Reference cannot have special characters
+              </div>
+          </div>
+      </div>
+    
+      <div  class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required formControlName="name">
+          <div *ngIf="nameExists">This name is used</div>
+          <div
+              *ngIf="Form.controls.name.invalid && (Form.controls.name.dirty || Form.controls.name.touched)"
+              class="error-text">
+              <div *ngIf="Form.controls.name.errors?.['required']">Name is required</div>
+              <div *ngIf="Form.controls.name.errors?.['minlength']">Name needs minimum 5 letters</div>
+              <div *ngIf="Form.controls.name.errors?.['maxlength']">Name has a maximum of 50 letters</div>
+              <div *ngIf="Form.controls.name.errors?.['pattern']">Name cannot have special characters</div>
+          </div>
+      </div>
+    
+      <div  class="form-group">
+          <label for="description">Description:</label>
+          <input id="description" type="text" formControlName="description">
+          <div *ngIf="descriptionExists">This description is used</div>
+          <div
+              *ngIf="Form.controls.description.invalid && (Form.controls.description.dirty || Form.controls.description.touched)"
+              class="error-text">
+              <div *ngIf="Form.controls.description.errors?.['maxlength']">Name has a maximum of 50 letters</div>
+          </div>
+      </div>
+    
+      <div  class="form-group">
+          <label for="price">Precio:</label>
+          <input type="number" id="price" name="price" required min="0" formControlName="price">
+          <div
+              *ngIf="Form.controls.price.invalid && (Form.controls.price.dirty || Form.controls.price.touched)"
+              class="error-text">
+              <div *ngIf="Form.controls.price.errors?.['required']">Precio is required</div>
+              <div *ngIf="Form.controls.price.errors?.['min']">Precio cannot be negative</div>
+          </div>
+      </div>
+    
+      <div  class="form-group">
+          <label for="category">Category:</label>
+          <select formControlName="category">
+              <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+          <div
+              *ngIf="Form.controls.category.invalid && (Form.controls.category.dirty || Form.controls.category.touched)"
+              class="error-text">
+              <div *ngIf="Form.controls.category.errors?.['required']">Category is required</div>
+          </div>
+      </div>
+    
+      <div  class="form-group">
+          <label for="sale">Sale: </label>
+          <input id="sale" type="checkbox" formControlName="sale">
+      </div>
+    
+      <div  class="form-group">
+          <label for="image">Image: </label>
+          <input type="text" id="image" name="image" required formControlName="image">
+      </div>
+      <div *ngIf="nameExists || descriptionExists" class="error-message">
+          Error: El nombre o la descripción ya existen.
+      </div>
+      <div  class="form-group">
+        <button class="submit-button" type="submit" [disabled]="Form.invalid">Enviar</button>
+    </div>
+    </form>
+  </div>

@@ -1,0 +1,22 @@
+<div class="container">
+  
+<h2 class="title">Productos</h2>
+
+<div *ngIf="productos.length > 0; else noProductos" class="producto-container">
+    <div *ngFor="let producto of productos" class="producto-item">
+        <div *ngIf="producto.image !== undefined && producto.image.trim() !== ''" class="producto-image">
+            <img [src]="producto.image" alt="producto image" class="image">
+        </div>
+        <div class="name">{{ producto.name }}</div>
+        <div class="description">{{ producto.description }}</div>
+        <div class="price">{{ producto.price }}€</div>
+        <div class="category">Category: {{ producto.category }}</div>
+        <div class="sale" *ngIf="producto.sale">Available!</div>
+    </div>
+</div>
+
+<ng-template #noProductos>
+    <p class="no-productos-message">No hay productos añadidos.</p>
+</ng-template>
+
+</div>

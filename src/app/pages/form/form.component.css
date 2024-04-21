@@ -1,0 +1,45 @@
+/* Estilos generales */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 150px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Para incluir el padding en el ancho total */
+}
+
+.error-text {
+  color: red;
+}
+
+.submit-button {
+  background-color: #ff9b29;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
