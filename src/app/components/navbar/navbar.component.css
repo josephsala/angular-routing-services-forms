@@ -1,9 +1,9 @@
 :host {
-  display: block;
-}
-.bg-orange {
-  background-color: #ff8520;
-}
-li.active {
-  background-color: #ff8520; /* Color naranja */
-}
+    display: block;
+  }
+  .bg-orange {
+    background-color: #ff8520;
+  }
+  li.active {
+    background-color: #ff8520; /* Color naranja */
+  }

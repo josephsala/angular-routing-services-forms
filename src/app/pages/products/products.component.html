@@ -1,22 +1,35 @@
-<div class="container">
+<!-- Main Content -->
+<main class="flex flex-col lg:flex-row items-center justify-center pt-20 pb-20 px-6">
+    <!-- Product List -->
+    <section class="flex flex-col items-start lg:w-2/3 gap-12">
+        <!-- Product Cards -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 overflow-y-auto max-h-[70rem]">
+        <article *ngFor="let product of products; let i = index" class="flex flex-col gap-6 p-6 w-full h-[32rem] text-base bg-gray-100 rounded-lg shadow-lg justify-between">
+          <div class="flex justify-between items-center">
+            <!-- Reference number and name of the product -->
+            <p class="font-semibold text-lg"><span class="text-gray-500 text-sm">{{ product.reference }}</span><br>
+              <span class="text-blue-600">{{ product.name }}</span>
+            </p>
+            <i class="fa-regular fa-times-circle text-red-600 text-2xl cursor-pointer transition-colors duration-300 ease-in-out hover:text-red-800" (click)="deleteProduct(i)"></i>
+          </div>
+          <!-- Image of the product -->
+          <div class="flex justify-center w-full">
+            <img [src]="product.image" [alt]="product.name" class="object-cover h-48">
+          </div>
+          <!-- Description of the product -->
+          <p class="text-justify">{{product.description}}</p>
+          <!-- Price of the product, Offer status and Buy button -->
+          <div class="flex items-center justify-between">
+            <p class="font-semibold">{{product.price}}€</p>
+            <p *ngIf="product.offer" class="text-green-700 font-bold">En Oferta</p>
+            <button class="py-2 px-5 border-transparent shadow-md font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+              Comprar
+            </button>
+          </div>
+        </article>
+      </section>
+    </section>
   
-<h2 class="title">Productos</h2>
-
-<div *ngIf="productos.length > 0; else noProductos" class="producto-container">
-    <div *ngFor="let producto of productos" class="producto-item">
-        <div *ngIf="producto.image !== undefined && producto.image.trim() !== ''" class="producto-image">
-            <img [src]="producto.image" alt="producto image" class="image">
-        </div>
-        <div class="name">{{ producto.name }}</div>
-        <div class="description">{{ producto.description }}</div>
-        <div class="price">{{ producto.price }}€</div>
-        <div class="category">Category: {{ producto.category }}</div>
-        <div class="sale" *ngIf="producto.sale">Available!</div>
-    </div>
-</div>
-
-<ng-template #noProductos>
-    <p class="no-productos-message">No hay productos añadidos.</p>
-</ng-template>
-
-</div>
+    
+  </main>
+  

@@ -1,40 +1,44 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Producto } from '../../interfaces/producto';
-import { ProductoService } from '../../services/producto.service';
+import { ChangeDetectionStrategy, Component, OnInit, effect } from '@angular/core';
+import { ProductsService } from '../../services/products-service';
+import { Product } from '../../interfaces/product';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductsComponent {
-  
-  productos: Producto[] = [];
-  searchTerm: string = '';
+export class ProductsComponent implements OnInit {
 
-  constructor(private productoService: ProductoService) { }
+  products = this.ProductsService.products;
+  isEditing: boolean = false;
+  showPopup: boolean = false;
 
+  constructor(private titleService: Title, private ProductsService: ProductsService) {
+
+    effect(() => { this.products = this.ProductsService.productSignal(); });
+
+    
+  }
   ngOnInit(): void {
-    this.productos = this.productoService.getAllProductos();
+    // Establecemos el título de la página
+    this.titleService.setTitle('Products');
+    // Obtenemos los productos desde el servicio
+    this.products = this.ProductsService.productSignal();
+    // Movemos el scroll al principio de la página
+    window.scrollTo(0, 0);
   }
 
-  search(term: string): void {
-    // Si el término de búsqueda está vacío, mostrar todos los productos
-    if (!term.trim()) {
-      this.productos = this.productoService.getAllProductos();
-      return;
-    }
-
-    // Filtrar los productos que coincidan con el término de búsqueda
-    this.productos = this.productoService.getAllProductos().filter(producto =>
-      producto.name.toLowerCase().includes(term.toLowerCase())
-    );
+  deleteProduct(index: number) {
+    // Método para eliminar un producto de la base de datos
+    this.ProductsService.deleteProduct(this.products[index].reference);
+    // Enviamos la eliminación del producto al servicio
+    this.ProductsService.productSignal.set(this.products);
   }
- }
+
+}
